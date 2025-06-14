@@ -9,26 +9,30 @@
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
-
-void pre(TreeNode* root,vector<int> &an){
-    if(root==nullptr) {return ;}
-
-
-    pre(root->left,an);
-    pre(root->right,an);
-    an.push_back(root->val);
-    
-}
-
-
-
 class Solution {
 public:
+
+
+
     vector<int> postorderTraversal(TreeNode* root) {
-         vector<int> an;
-        
-        pre(root,an);
-        return an;
-        
+        vector<int> v;
+        if(root==nullptr) return v;
+        stack<TreeNode*> s;
+
+        s.push(root);
+
+        while(!s.empty()){
+            TreeNode* p=s.top();
+            s.pop();
+
+            v.push_back(p->val);
+            if(p->left!=nullptr) s.push(p->left);            
+            if(p->right!=nullptr) s.push(p->right);
+            
+        }
+
+        reverse(v.begin(),v.end());
+        return v;
+
     }
 };
