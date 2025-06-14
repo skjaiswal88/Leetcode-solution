@@ -25,10 +25,10 @@ public:
             TreeNode* p=s.top();
             s.pop();
 
-            v.push_back(p->val);
+            
             if(p->left!=nullptr) s.push(p->left);            
             if(p->right!=nullptr) s.push(p->right);
-            
+            v.push_back(p->val);
         }
 
         reverse(v.begin(),v.end());
