@@ -9,25 +9,48 @@
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
-
-int height(TreeNode* root) {
-    if (root == nullptr) return 0;
-
-    int leftHeight = height(root->left);
-    int rightHeight = height(root->right);
-
-    // If left or right subtree is unbalanced, propagate -1 up
-    if (leftHeight == -1 || rightHeight == -1 || abs(leftHeight - rightHeight) > 1) {
-        return -1;
-    }
-    
-    // Return the height if balanced
-    return 1 + max(leftHeight, rightHeight);
-}
-
 class Solution {
 public:
+    int cnt(TreeNode* root){
+        int an=0;
+        queue<TreeNode*> q;
+        if(root==nullptr) return 0;
+
+        int s=1;
+        q.push(root);
+
+        while(!q.empty()){
+            while(s){
+                TreeNode* f=q.front();
+                q.pop();
+                s--;
+                if(f->left!=nullptr) q.push(f->left);
+                if(f->right!=nullptr) q.push(f->right);
+            }
+            s=q.size();
+            an++;
+        }
+        return an;
+    }
+
+    void fun(TreeNode* root, bool & y){
+        if(abs( (cnt(root->left)) - (cnt(root->right)) )>1) {
+            y=false;
+            return ;
+        }
+        else{
+            if(root->left!=nullptr) fun(root->left,y);
+            if(root->right!=nullptr) fun(root->right,y);
+        }
+    }
+
     bool isBalanced(TreeNode* root) {
-        return height(root) != -1;
+        bool y=true;
+        if(root==nullptr) return true;
+
+        fun(root,y);
+
+
+        return y;
     }
 };
