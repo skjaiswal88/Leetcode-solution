@@ -11,46 +11,22 @@
  */
 class Solution {
 public:
-    int cnt(TreeNode* root){
-        int an=0;
-        queue<TreeNode*> q;
+
+    int fun(TreeNode* root){
         if(root==nullptr) return 0;
 
-        int s=1;
-        q.push(root);
+        int l=fun(root->left);
+        int r=fun(root->right);
 
-        while(!q.empty()){
-            while(s){
-                TreeNode* f=q.front();
-                q.pop();
-                s--;
-                if(f->left!=nullptr) q.push(f->left);
-                if(f->right!=nullptr) q.push(f->right);
-            }
-            s=q.size();
-            an++;
-        }
-        return an;
-    }
+        if(l==-1 || r==-1 || abs(l-r)>1) return -1;
 
-    void fun(TreeNode* root, bool & y){
-        if(abs( (cnt(root->left)) - (cnt(root->right)) )>1) {
-            y=false;
-            return ;
-        }
-        else{
-            if(root->left!=nullptr) fun(root->left,y);
-            if(root->right!=nullptr) fun(root->right,y);
-        }
+        return max(l,r)+1;
     }
 
     bool isBalanced(TreeNode* root) {
-        bool y=true;
-        if(root==nullptr) return true;
+        int y = fun(root);
 
-        fun(root,y);
-
-
-        return y;
+        if(y==-1) return false;
+        else return true;
     }
 };
