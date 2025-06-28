@@ -9,30 +9,23 @@
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
-void ino(TreeNode* root, int k, int &c, int &s){
-    if(!root || k<=c) {return;}
-
-    ino(root->left,k,c,s);
-
-    c++;
-    if(c==k){
-        s=root->val;
-    }
-
-    ino(root->right,k,c,s);
-
-} 
-
 class Solution {
 public:
+
+    void fun(TreeNode* root, vector<int> &v){
+        if(root->left!=nullptr){
+            fun(root->left,v);
+        }
+        v.push_back(root->val);
+
+        if(root->right!=nullptr){
+            fun(root->right,v);
+        }
+    }
+
     int kthSmallest(TreeNode* root, int k) {
-        int c=0;
-        int s=INT_MAX;
-
-        ino(root,k,c,s);
-
-        return s;
-
-        
+        vector<int> v;
+        fun(root,v);
+        return v[k-1];
     }
 };
