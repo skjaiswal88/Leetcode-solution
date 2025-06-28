@@ -12,20 +12,25 @@
 class Solution {
 public:
 
-    void fun(TreeNode* root, vector<int> &v){
+    int result=-1;
+    int count=0;
+
+    void fun(TreeNode* root, int k){
         if(root->left!=nullptr){
-            fun(root->left,v);
+            fun(root->left,k);
         }
-        v.push_back(root->val);
+        count++;
+        if(count==k){
+            result=root->val;
+        }
 
         if(root->right!=nullptr){
-            fun(root->right,v);
+            fun(root->right,k);
         }
     }
 
     int kthSmallest(TreeNode* root, int k) {
-        vector<int> v;
-        fun(root,v);
-        return v[k-1];
+        fun(root,k);
+        return result;
     }
 };
