@@ -41,7 +41,6 @@ public:
         if(n-1>f) return -1;
         
         Disjoint dsu(n);
-        set<int> st;
 
         for(auto e:connections){
             if(dsu.uni(e[0],e[1]) ) c--;
