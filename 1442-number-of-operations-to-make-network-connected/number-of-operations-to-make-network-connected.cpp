@@ -6,7 +6,7 @@ class Disjoint{
         s.resize(n+1);
         for(int i=0;i<n;i++){
             pa[i]=i;
-            s[1]=1;
+            s[i]=1;
         }
     }
 
@@ -15,11 +15,11 @@ class Disjoint{
         return pa[a]=par(pa[a]);
     }
 
-    void uni(int a,int b){
+    bool uni(int a,int b){
         int ua=par(a);
         int ub=par(b);
 
-        if(ua==ub) return ;
+        if(ua==ub) return false;
         if(s[ua]>s[ub]){
             pa[ub]=ua;
             s[ua]=s[ua]+s[ub];
@@ -28,6 +28,7 @@ class Disjoint{
             pa[ua]=ub;
             s[ub]=s[ub]+s[ua];
         }
+        return true;
     }
 };
 
@@ -35,6 +36,7 @@ class Solution {
 public:
     int makeConnected(int n, vector<vector<int>>& connections) {
         int f=connections.size();
+        int c=n;
 
         if(n-1>f) return -1;
         
@@ -42,14 +44,10 @@ public:
         set<int> st;
 
         for(auto e:connections){
-            dsu.uni(e[0],e[1]);
+            if(dsu.uni(e[0],e[1]) ) c--;
         }
 
-        for(int i=0;i<n;i++){
-            st.insert(dsu.par(i));
-        }
-
-        return st.size()-1;
+        return c-1;
 
     }
 };
