@@ -4,41 +4,41 @@ public:
     int minPathSum(vector<vector<int>>& grid) {
         int n=grid.size();
         int m=grid[0].size();
-        vector<vector<int>> dp(n,vector<int>(m,0));
+        vector<int> pr (m,100000);
 
 
         for(int i=0;i<n;i++){
+            vector<int> cu (m,0);
             for(int j=0;j<m;j++){
-
-                if(i==0 && j==0) {
-                    dp[0][0] = grid[0][0];
-                    continue;
-                }
-
-                int a=grid[i][j];
-                int b=grid[i][j];
-
-                if(i>0){
-                    a=a+dp[i-1][j];
+                if(i==0 && j==0){
+                    cu[j]=grid[i][j];
                 }
                 else{
-                    a=100000;
+                    int a, b;
+
+                if(i>0){
+                    a=pr[j];
+                }
+                else{
+                    a=INT_MAX;
                 }
 
                 if(j>0){
-                    b=b+dp[i][j-1];
+                    b=cu[j-1];
                 }
                 else{
-                    b=100000;
+                    b=INT_MAX;
                 }
 
-                dp[i][j]=min(a,b);
+                cu[j]=grid[i][j]+min(a,b);
 
             }
+            }
+            pr=cu;
         }
 
 
 
-        return dp[n-1][m-1];
+        return pr[m-1];
     }
 };
